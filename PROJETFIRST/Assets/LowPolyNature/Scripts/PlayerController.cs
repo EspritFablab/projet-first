@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
 
     public HUD Hud;
 
+    public int Mouton = 2;
+
     public float JumpSpeed = 7.0f;
 
     #endregion
@@ -317,7 +319,7 @@ public class PlayerController : MonoBehaviour
                     _animator.SetBool("run", move.magnitude > 0);
                 }
             }
-           
+
             _moveDirection.y -= Gravity * Time.deltaTime;
 
             _characterController.Move(_moveDirection * Time.deltaTime);

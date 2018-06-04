@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class gate : MonoBehaviour {
 
-	public GameObject player;
+	public PlayerController player;
 
 	// Use this for initialization
 	void Start () {
@@ -14,14 +14,14 @@ public class gate : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (player.mouton >= 3)
+		if (player.Mouton >= 3 && transform.position.y < 7)
 		{
-				openGate();
+				OpenGate();
 		}
 	}
 
-	void openGate()	{
-		transform.position = new Vector3 (transform.position.x, 5.5f, transform.position.z);
+	void OpenGate()	{
+		transform.position += new Vector3(0f, 1 * Time.deltaTime, 0f);
 	}
 
 }
