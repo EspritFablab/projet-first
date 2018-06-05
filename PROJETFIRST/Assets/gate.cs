@@ -13,8 +13,7 @@ public class gate : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
-		if (player.Mouton >= 3 && transform.position.y < 7)
+		if (player.Moutonkill <= 0 && transform.position.y < 7)
 		{
 				OpenGate();
 		}

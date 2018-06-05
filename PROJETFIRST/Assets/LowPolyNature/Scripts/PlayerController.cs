@@ -21,9 +21,13 @@ public class PlayerController : MonoBehaviour
 
     private HealthBar mFoodBar;
 
+    private HealthBar mMoutonBar;
+
     private int startHealth;
 
     private int startFood;
+
+    private int startmouton;
 
     #endregion
 
@@ -60,6 +64,11 @@ public class PlayerController : MonoBehaviour
         mFoodBar.Min = 0;
         mFoodBar.Max = Food;
         startFood = Food;
+
+        mMoutonBar = Hud.transform.Find("Bars_Panel/MoutonBar").GetComponent<HealthBar>();
+        mMoutonBar.Min = 0;
+        mMoutonBar.Max = Moutonkill;
+        startmouton = Moutonkill;
 
         InvokeRepeating("IncreaseHunger", 0, HungerRate);
     }
@@ -103,13 +112,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private int Attack_1_Hash = Animator.StringToHash("Base Layer.Attack_1");
+    private int Attack_1_Hash = Animator.StringToHash("Attack Layer.Attack_1");
 
     public bool IsAttacking
     {
         get
         {
-            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(1);
             if(stateInfo.fullPathHash == Attack_1_Hash)
             {
                 return true;
@@ -152,6 +161,9 @@ public class PlayerController : MonoBehaviour
 
     [Tooltip("Amount of health")]
     public int Health = 100;
+
+    [Tooltip("Amount of mouton")]
+    public int Moutonkill = 100;
 
     [Tooltip("Amount of food")]
     public int Food = 100;
@@ -215,6 +227,21 @@ public class PlayerController : MonoBehaviour
         }
 
         mHealthBar.SetValue(Health);
+    }
+
+    public void mouton(int amount)
+    {
+        Moutonkill -= amount;
+        if (Moutonkill > startmouton)
+        {
+            Moutonkill = startmouton;
+        }
+
+        if(Moutonkill < 0)
+          Moutonkill = 0;
+
+        mMoutonBar.SetValue(Moutonkill);
+
     }
 
     public void TakeDamage(int amount)
@@ -317,7 +344,7 @@ public class PlayerController : MonoBehaviour
                     _animator.SetBool("run", move.magnitude > 0);
                 }
             }
-           
+
             _moveDirection.y -= Gravity * Time.deltaTime;
 
             _characterController.Move(_moveDirection * Time.deltaTime);
