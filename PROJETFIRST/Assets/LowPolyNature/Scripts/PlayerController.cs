@@ -292,13 +292,13 @@ public class PlayerController : MonoBehaviour
                     (mInteractItem as InventoryItemBase).OnPickup();
                 }
 
-                Hud.CloseMessagePanel();
+                //Hud.CloseMessagePanel();
 
-                mInteractItem = null;
+                //mInteractItem = null;
             }
 
             // Execute action with item
-            if (mCurrentItem != null && Input.GetMouseButtonDown(0))
+            if (mCurrentItem != null && mCurrentItem.ItemType == EItemType.Weapon && Input.GetMouseButtonDown(0))
             {
                 // Dont execute click if mouse pointer is over uGUI element
                 if (!EventSystem.current.IsPointerOverGameObject())
