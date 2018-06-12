@@ -23,6 +23,7 @@ public class InventorySlot
     {
         item.Slot = this;
         mItemStack.Push(item);
+        Debug.Log(item.Slot);
     }
 
     public InventoryItemBase FirstItem

@@ -19,6 +19,8 @@ public class InteractableItemBase : MonoBehaviour
 
     public EItemType ItemType;
 
+    public bool MessagePanel = true;
+
     public virtual void OnInteract()
     {
     }
@@ -55,7 +57,7 @@ public class InventoryItemBase : InteractableItemBase
     {
         Destroy(gameObject.GetComponent<Rigidbody>());
         gameObject.SetActive(false);
-        
+
     }
 
     public Vector3 PickPosition;

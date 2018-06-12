@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     #region Private Members
 
+    private bool spawned = false;
+
+    private float decay;
+
     private Animator _animator;
 
     private CharacterController _characterController;
@@ -259,6 +263,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void Reset()
+    {
+      if(spawned && decay > 0)
+    {
+        decay -= Time.deltaTime;
+    }
+      if(decay < 0)
+    {
+        decay = 0;
+        spawned = false;
+    }
+}
+
     #endregion
 
 
@@ -277,11 +294,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    Reset();
         if (!IsDead)
         {
             // Interact with the item
-            if (mInteractItem != null && Input.GetKeyDown(KeyCode.F))
+            if (mInteractItem != null && Input.GetKeyDown(KeyCode.F) && !spawned)
             {
+                decay = 1f;
+                spawned = true;
                 // Common interact method
                 mInteractItem.OnInteract();
 
@@ -292,9 +312,9 @@ public class PlayerController : MonoBehaviour
                     (mInteractItem as InventoryItemBase).OnPickup();
                 }
 
-                //Hud.CloseMessagePanel();
+                Hud.CloseMessagePanel();
 
-                //mInteractItem = null;
+                mInteractItem = null;
             }
 
             // Execute action with item
@@ -332,11 +352,12 @@ public class PlayerController : MonoBehaviour
 
                 _moveDirection *= Speed;
 
-                if (Input.GetButton("Jump"))
+                if (Input.GetButton("Jump") && !spawned)
                 {
+                    decay = 1f;
+                    spawned = true;
                     _animator.SetBool("is_in_air", true);
                     _moveDirection.y = JumpSpeed;
-
                 }
                 else
                 {
@@ -357,7 +378,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         InteractableItemBase item = other.GetComponent<InteractableItemBase>();
-        if (item != null)
+        if (item != null && item.MessagePanel)
         {
             mInteractItem = item;
 

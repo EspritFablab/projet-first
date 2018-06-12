@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Fire
   - Item
+  - Slot
+  - Slots
+  - CraftSystem
+  - ResultSlot
+  - Torche
+  - Quest
   layers:
   - Default
   - TransparentFX

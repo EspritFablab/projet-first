@@ -13,6 +13,9 @@ public class Crate : InteractableItemBase {
         InteractText = "Press F to ";
 
         mIsOpen = !mIsOpen;
+        this.GetComponent<BoxCollider>().enabled = false;
+        System.Threading.Thread.Sleep(10);
+        this.GetComponent<BoxCollider>().enabled = true;
         InteractText += mIsOpen ? "to close" : "to open";
 
         Debug.Log(mIsOpen);

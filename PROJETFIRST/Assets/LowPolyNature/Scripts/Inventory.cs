@@ -43,6 +43,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(InventoryItemBase item)
     {
+        Debug.Log("test");
         InventorySlot freeSlot = FindStackableSlot(item);
         if (freeSlot == null)
         {
